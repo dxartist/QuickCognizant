@@ -3,17 +3,18 @@ package com.dt.sharath.quickcognizant;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Button;
 
 
+
+//testing
 public class MyActivity extends Activity {
 
-                         private WebView mWebView;
+    private WebView mWebView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,36 +22,77 @@ public class MyActivity extends Activity {
         setContentView(R.layout.activity_my);
 
 
-                         mWebView = (WebView) findViewById(R.id.wv);
+        mWebView = (WebView) findViewById(R.id.wv);
 
-                        WebSettings webSettings = mWebView.getSettings();
-                        webSettings.setJavaScriptEnabled(true);
-
-
-                        mWebView.getSettings().setBuiltInZoomControls(true);
+        WebSettings webSettings = mWebView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
 
 
-                        mWebView.loadUrl("https://onecognizant.cognizant.com/");
-                        // Force links and redirects to open in the WebView instead of in a browser
-                        mWebView.setWebViewClient(new WebViewClient());
+        mWebView.getSettings().setBuiltInZoomControls(true);
+
+
+        mWebView.loadUrl("https://onecognizant.cognizant.com/");
+        // Force links and redirects to open in the WebView instead of in a browser
+        mWebView.setWebViewClient(new WebViewClient());
     }
 
 
-                        @Override
-                        public void onBackPressed() {
-                            if(mWebView.canGoBack()) {
-                                mWebView.goBack();
-                            } else {
-                                super.onBackPressed();
-                            }
-                        }
+    @Override
+    public void onBackPressed() {
+        if (mWebView.canGoBack()) {
+            mWebView.goBack();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+
+
+    @Override
+    public boolean onCreateOptionsMenu (Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.item_refresh){
+            mWebView.reload();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//refresh added in version 2
+/*
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
+
+
     }
+
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -58,25 +100,26 @@ public class MyActivity extends Activity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
 
-                                    Button refr;
+
         int id = item.getItemId();
         if (id == R.id.item_refresh) {
             return true;
         }
 
+            refr = (Button) findViewById(R.id.item_refresh);
+            refr.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mWebView.loadUrl("https://onecognizant.cognizant.com/");
+                }
+            });
 
-                                    refr = (Button) findViewById(R.id.item_refresh);
-                                    refr.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            mWebView.loadUrl("https://onecognizant.cognizant.com/");
-                                        }
-                                    });
+            return super.onOptionsItemSelected(item);
 
-        return super.onOptionsItemSelected(item);
+
+        }
 
 
     }
 
-
-}
+*/
